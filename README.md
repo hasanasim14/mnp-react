@@ -1,46 +1,13 @@
-# Getting Started with Create React App
+# React Beginner Course 2024 (Vite, Tailwind CSS, TypeScript)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the project code for my YouTube tutorial: https://www.youtube.com/watch?v=siTUv1L9ymM
 
-## Available Scripts
+Learn the basics of **React.js** with Tailwind CSS and TypeScript. You will learn:
+- How to set up a new React project using Vite
+- How to install & use Tailwind CSS in React
+- How to think in React
+- The difference between declarative and imperative code
+- What are components, props, JSX, SPA, unidirectional data flow, callbacks, state, side effects, and more.
+- How to build your first app with clean & well-organized code
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+![thumbnail](https://github.com/codinginflow/2024-react-beginner/assets/52977034/8388f39f-b9da-46b6-b5f8-8d1281205069)
