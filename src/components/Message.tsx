@@ -38,7 +38,7 @@ const Message = ({
 
   const fetchExistingMessages = async (sessionId: string) => {
     try {
-      const res = await fetch("api/chatHistory", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/chatHistory`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -146,7 +146,7 @@ const Message = ({
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
     try {
-      const res = await fetch("api/agent", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/agent`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
