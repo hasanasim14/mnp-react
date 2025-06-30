@@ -5,14 +5,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { MessageSquare, Home, MessageCircle } from "lucide-react";
 import Message from "./Message";
 import HomePage from "./Home";
-import IframeComponent from "./IframeComponent";
 
 type PopoverPage = "home" | "message";
 
 const MessageButton = () => {
   const [open, setOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<PopoverPage>("home");
-  const [currentUrl, setCurrentUrl] = useState("https://www.mulphilog.com/");
   const [message, setMessage] = useState("");
   const [initialQuery, setInitialQuery] = useState<string | undefined>();
   const [isLoading, _setIsLoading] = useState(false);
@@ -48,7 +46,6 @@ const MessageButton = () => {
             <div className="flex-1 overflow-y-auto">
               <Message
                 initialQuery={initialQuery}
-                onUrlDetected={(url) => setCurrentUrl(url)}
                 hasUsedInitialQuery={hasUsedInitialQuery}
               />
             </div>
@@ -120,8 +117,6 @@ const MessageButton = () => {
         </div>
       </div>
 
-      <IframeComponent currentUrl={currentUrl} />
-
       <div className="fixed bottom-8 right-8 z-50">
         {!open && (
           <div className="absolute -top-4 -left-24 flex items-center gap-2">
@@ -149,7 +144,6 @@ const MessageButton = () => {
             side="top"
             style={{ maxHeight: "calc(100vh - 95px)" }}
             onInteractOutside={(e) => {
-              // Prevent closing when clicking on the button
               const target = e.target as HTMLElement;
               if (target.closest(".fixed.bottom-8.right-8")) {
                 e.preventDefault();

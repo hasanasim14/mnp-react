@@ -10,20 +10,16 @@ import { TextAreaMessage } from "./TextAreaMessage";
 import ReactMarkdown from "react-markdown";
 
 interface MessageProps {
-  onUrlDetected: (url: string) => void;
   initialQuery?: string;
   hasUsedInitialQuery?: React.MutableRefObject<boolean>;
 }
 type Message = {
   role: "user" | "assistant";
   content: string;
+  source?: "history" | "agent";
 };
 
-const Message = ({
-  onUrlDetected,
-  initialQuery,
-  hasUsedInitialQuery,
-}: MessageProps) => {
+const Message = ({ initialQuery, hasUsedInitialQuery }: MessageProps) => {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -38,7 +34,7 @@ const Message = ({
 
   const fetchExistingMessages = async (sessionId: string) => {
     try {
-      const res = await fetch(process.env.REACT_APP_API_URL + "/chatHistory", {
+      const res = await fetch(import.meta.env.VITE_API_URL + "/chatHistory", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,10 +47,10 @@ const Message = ({
 
       const data = await res.json();
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const transformedMessages = data.map((msg: any) => ({
         role: msg.type === "user" ? "user" : "assistant",
         content: msg.content,
+        source: "history",
       }));
 
       if (transformedMessages.length > 0) {
@@ -109,25 +105,26 @@ const Message = ({
 
     if (messages.length > prevMessagesLength.current) {
       const newMessages = messages.slice(prevMessagesLength.current);
+
       newMessages.forEach((msg) => {
-        if (msg.role === "assistant") {
+        if (msg.role === "assistant" && msg.source === "agent") {
           const urlRegex =
-            /(?:https?:\/\/[^\s]+)|(?:\[([^\]]+)\]$$(https?:\/\/[^\s)]+)$$)/g;
+            /(?:https?:\/\/[^\s]+)|(?:\[([^\]]+)\]\((https?:\/\/[^\s)]+)\))/g;
           let match;
 
           while ((match = urlRegex.exec(msg.content)) !== null) {
             const url = match[2] || match[0];
-            if (url && onUrlDetected) {
-              onUrlDetected(url);
+
+            if (url) {
+              window.open(url, "_blank");
             }
           }
         }
       });
     }
 
-    // Update the previous messages length
     prevMessagesLength.current = messages.length;
-  }, [messages, onUrlDetected]);
+  }, [messages]);
 
   // Save cursor position
   useEffect(() => {
@@ -146,7 +143,7 @@ const Message = ({
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
     try {
-      const res = await fetch(process.env.REACT_APP_API_URL + "/agent", {
+      const res = await fetch("https://smartchat.ai-iscp.com/agent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -177,7 +174,7 @@ const Message = ({
         data.data?.Message || "I couldn't process that request.";
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: assistantMessage },
+        { role: "assistant", content: assistantMessage, source: "agent" },
       ]);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -189,7 +186,7 @@ const Message = ({
 
         setMessages((prev) => [
           ...prev,
-          { role: "assistant", content: errorMessage },
+          { role: "assistant", content: errorMessage, source: "agent" },
         ]);
       }
     } finally {
@@ -255,7 +252,6 @@ const Message = ({
                       <div className="whitespace-pre-wrap">
                         <ReactMarkdown
                           components={{
-                            /* eslint-disable @typescript-eslint/no-unused-vars */
                             a: ({ node, ...props }) => (
                               <a
                                 className="text-blue-600 underline hover:text-blue-800"
@@ -264,25 +260,21 @@ const Message = ({
                                 {...props}
                               />
                             ),
-                            /* eslint-disable @typescript-eslint/no-unused-vars */
                             pre: ({ node, ...props }) => (
                               <pre
                                 className="bg-gray-100 p-2 rounded my-2 overflow-x-auto"
                                 {...props}
                               />
                             ),
-                            /* eslint-disable @typescript-eslint/no-unused-vars */
                             code: ({ node, ...props }) => (
                               <code
                                 className="bg-gray-100 rounded px-1 py-0.5"
                                 {...props}
                               />
                             ),
-                            /* eslint-disable @typescript-eslint/no-unused-vars */
                             strong: ({ node, ...props }) => (
                               <strong className="font-bold" {...props} />
                             ),
-                            /* eslint-disable @typescript-eslint/no-unused-vars */
                             em: ({ node, ...props }) => (
                               <em className="italic" {...props} />
                             ),
