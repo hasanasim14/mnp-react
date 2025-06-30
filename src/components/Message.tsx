@@ -143,7 +143,7 @@ const Message = ({ initialQuery, hasUsedInitialQuery }: MessageProps) => {
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
     try {
-      const res = await fetch("https://smartchat.ai-iscp.com/agent", {
+      const res = await fetch(import.meta.env.VITE_API_UR + "/agent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
