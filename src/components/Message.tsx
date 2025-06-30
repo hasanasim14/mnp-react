@@ -145,7 +145,7 @@ const Message = ({ initialQuery, hasUsedInitialQuery }: MessageProps) => {
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
     try {
-      const res = await fetch(import.meta.env.VITE_API_UR + "/agent", {
+      const res = await fetch(import.meta.env.VITE_API_URL + "/agent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
