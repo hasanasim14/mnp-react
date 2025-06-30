@@ -32,6 +32,8 @@ const Message = ({ initialQuery, hasUsedInitialQuery }: MessageProps) => {
   const [hasLoadedExistingMessages, setHasLoadedExistingMessages] =
     useState(false);
 
+  console.log("endpoint", import.meta.env.VITE_API_URL);
+
   const fetchExistingMessages = async (sessionId: string) => {
     try {
       const res = await fetch(import.meta.env.VITE_API_URL + "/chatHistory", {
