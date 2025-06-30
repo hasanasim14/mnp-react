@@ -32,11 +32,13 @@ const Message = ({ initialQuery, hasUsedInitialQuery }: MessageProps) => {
   const [hasLoadedExistingMessages, setHasLoadedExistingMessages] =
     useState(false);
 
-  console.log("endpoint", import.meta.env.VITE_API_URL);
+  // console.log("endpoint", import.meta.env.VITE_API_URL);
+
+  const endpoint = import.meta.env.VITE_API_URL;
 
   const fetchExistingMessages = async (sessionId: string) => {
     try {
-      const res = await fetch(import.meta.env.VITE_API_URL + "/chatHistory", {
+      const res = await fetch(endpoint + "/chatHistory", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -145,7 +147,7 @@ const Message = ({ initialQuery, hasUsedInitialQuery }: MessageProps) => {
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
     try {
-      const res = await fetch(import.meta.env.VITE_API_UR + "/agent", {
+      const res = await fetch(endpoint + "/agent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
